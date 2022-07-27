@@ -16,14 +16,14 @@ public class HelloController {
     }
 
     @GetMapping("hello-mvc")
-    public String helloMvc(@RequestParam(value = "name") String name, Model model) {
+    public String helloMvc(@RequestParam(value = "name", required = false) String name, Model model) {
         model.addAttribute("name", name);
         return "hello-template";
     }
 
     @GetMapping("hello-string")
     @ResponseBody
-    public String helloString(@RequestParam("name") String name) {
+    public String helloString(@RequestParam("name")  String name) {
         return "hello " + name;
     }
 
@@ -33,6 +33,8 @@ public class HelloController {
         Hello hello = new Hello();
         hello.setName(name);
         return hello;
+        //@ResponseBody 를 사용하면 뷰 리졸버( viewResolver )를 사용하지 않음
+        //대신에 HTTP의 BODY에 문자 내용을 직접 반환(HTML BODY TAG를 말하는 것이 아님)
     }
 
     static class Hello{
